@@ -3,7 +3,7 @@
  * do not make use of this class directly but rather a subclass: SquareBooleanCell.
  */
 
-package cellularAutomata;
+package oldSource;
 
 import java.awt.Color;
 

@@ -7,7 +7,7 @@
  * algorithm and changing the default case for which algorith is run.
  */
 
-package cellularAutomata;
+package oldSource;
 
 import acm.graphics.*;
 import acm.program.*;

@@ -3,7 +3,7 @@
  * grid of Squares as long as they implement this.
  */
 
-package cellularAutomata;
+package oldSource;
 
 public interface BooleanCell {
 	

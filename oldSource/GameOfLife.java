@@ -10,7 +10,7 @@
  * 	Once initialized the class allow the user to step the simulation forward and to modify the world
  * by setting the state of cells and adding predefined patterns
  */
-package cellularAutomata;
+package oldSource;
 
 public class GameOfLife {
 	final private int LAYERS = 2;

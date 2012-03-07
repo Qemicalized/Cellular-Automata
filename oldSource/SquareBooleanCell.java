@@ -2,7 +2,7 @@
  * Extends ignotas square class to implement BooleanCell interface. I am thus able to treat it the 
  * same way as any other class implementing the same interface.
  */
-package cellularAutomata;
+package oldSource;
 
 public class SquareBooleanCell extends Square implements BooleanCell{
 	public SquareBooleanCell (int x, int y, int squareSize, int widthFrameBorder, int heightFrameBorder) {
