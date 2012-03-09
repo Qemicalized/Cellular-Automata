@@ -1,3 +1,7 @@
+/*
+ * The square class, same as before but no longer implementing any interfaces. Some circular stuff 
+ * going  on with abstract algorithms and square interfaces.
+ */
 package cellularAutomata;
 
 public class Square{

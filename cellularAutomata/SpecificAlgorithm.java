@@ -1,3 +1,6 @@
+/*
+ * Example of what should be the base of every new algorithm, ie they should extend GeneralAlgorithm
+ */
 package cellularAutomata;
 
 public class SpecificAlgorithm extends GeneralAlgorithm {
