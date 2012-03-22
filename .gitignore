@@ -40,3 +40,9 @@ Thumbs.db
 # Temporary files #
 ###################
 *~
+
+# Eclipse Project Files #
+#########################
+.classpath
+.project
+.settings
