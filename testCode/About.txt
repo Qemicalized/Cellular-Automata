@@ -1,0 +1,1 @@
+Basicly Ignotas code hacked to make it esy to test new algorithms. Make sure to use TestSquare rather than just square.
