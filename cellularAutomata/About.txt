@@ -1,3 +1,0 @@
-Tried to compile the progress so far. I do however feel tired and confused at the moment so if anything seem wierd or different to what we discussed or you expected, change it or point it out and I'll have a look at it.
-
-Note that nothing in this package will run, at least not in a meaningful manner.
