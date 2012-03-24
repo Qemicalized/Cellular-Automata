@@ -3,15 +3,16 @@ import java.util.ArrayList;
 
 public class AlgorithmGameOfLife implements Algorithm {
 	
-	public ArrayList<Integer[]> getNextGeneration(Grid g) {
+	public ArrayList<ChangelogItem> getNextGeneration(Grid g) {
 		//For classic game of life algorithm we need to have
 		//a randomised grid at the beginning or else nothing happens:
 		if (g.getGeneration() == 0)
-			g.setGridRandomColors(2);
+			//g.setGridRandomColors(2);
+			g.setGridLineOfTen();
 		//We get some space for storing the row, column and color
 		//of each cell, that has to be changed:
-		ArrayList<Integer[]> arrList = new ArrayList<Integer[]>();
-		Integer[] a;
+		ArrayList<ChangelogItem> arrList = new ArrayList<ChangelogItem>();
+		ChangelogItem a;
 		int liveSquares;
 		//We loop over every cell:
 		for (int y = 0 ; y < g.getDimension() ; y++ )
@@ -24,10 +25,7 @@ public class AlgorithmGameOfLife implements Algorithm {
 				if (g.getSquareArray()[y][x] == 0) { 
 					//But should be on:
 					if (liveSquares == 2 || liveSquares == 3) {
-						a = new Integer[3];
-						a[0] = y;
-						a[1] = x;
-						a[2] = 1;
+						a = new ChangelogItem(y, x, 1);
 						arrList.add(a);
 					}
 				}
@@ -35,17 +33,14 @@ public class AlgorithmGameOfLife implements Algorithm {
 				else
 					//And should be off:
 					if (liveSquares != 2 && liveSquares != 3) {
-						a = new Integer[3];
-						a[0] = y;
-						a[1] = x;
-						a[2] = 0;
+						a = new ChangelogItem(y, x, 0);
 						arrList.add(a);
 					}
 			}
 		//Updating our grid:
 		for (int u = 0 ; u < arrList.size() ; u++) {
 			a = arrList.get(u);
-			g.setSquareArray(a[0], a[1], a[2]);
+			g.setSquareArray(a.getRow(), a.getColumn(), a.getNewState());
 		}
 		//We increase the generation:
 			g.setGeneration(g.getGeneration() + 1);

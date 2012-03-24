@@ -2,7 +2,7 @@ public class Engine extends Thread{
 	
 	//Current algorithm:
 	private Algorithm alg;
-	private int delay = 25;
+	private int delay = 20;
 	private GUI gui;
 	private Grid grid;
 	private boolean engineShouldRun = false;

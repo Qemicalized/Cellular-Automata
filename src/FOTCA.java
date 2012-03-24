@@ -27,7 +27,7 @@ public abstract class FOTCA implements Algorithm{
 	private int[][] surface;
 	private int[][] bouncingWall;
 	
-	private ArrayList<Integer[]> changeLog;
+	private ArrayList<ChangelogItem> changeLog;
 	private boolean changelogEnabled;
 	
 	public FOTCA(int numberOfColors) {
@@ -42,7 +42,7 @@ public abstract class FOTCA implements Algorithm{
 		this.surface = new int[numberOfRows][numberOfColumns];
 		this.bouncingWall = new int[numberOfRows][numberOfColumns];
 		
-		this.changeLog = new ArrayList<Integer[]>();
+		this.changeLog = new ArrayList<ChangelogItem>();
 	}
 	
 	/* * ** *** ***** ******** ************* *********************
@@ -89,11 +89,7 @@ public abstract class FOTCA implements Algorithm{
 		if (bouncingWall[row][column] > 0) {
 			surface[row][column] = bouncingWall[row][column]-1;
 			if (changelogEnabled) {
-				Integer[] change = new Integer[3];
-				change[0] = row;
-				change[1] = column;
-				change[2] = surface[row][column];
-				this.changeLog.add(change);
+				this.changeLog.add(new ChangelogItem(row, column, surface[row][column]));
 			}
 		}else {
 			carryState(row, column);
@@ -103,11 +99,7 @@ public abstract class FOTCA implements Algorithm{
 	protected void setStateHigh(int row, int column) {
 		surface[row][column] = high;
 		if (changelogEnabled) {
-			Integer[] change = new Integer[3];
-			change[0] = row;
-			change[1] = column;
-			change[2] = high;
-			this.changeLog.add(change);
+			this.changeLog.add(new ChangelogItem(row, column, high));
 		}
 	}
 	
@@ -175,7 +167,7 @@ public abstract class FOTCA implements Algorithm{
 		//Attempts to keep the change log as short as possible
 		//if (medium[currentLayer][row][column] != state) {
 			surface[row][column] = state;
-		//	this.changeLog.add(new ChangeLogItem(row, column, state));
+		//	this.changeLog.add(new ChangelogItem(row, column, state));
 		//}else {
 		//	carryState(row, column);
 		//}
@@ -255,7 +247,7 @@ public abstract class FOTCA implements Algorithm{
 	 * @see Algorithm#getNextGeneration(Grid)
 	 */
 	@Override
-	public ArrayList<Integer[]> getNextGeneration(Grid grid) {
+	public ArrayList<ChangelogItem> getNextGeneration(Grid grid) {
 		clearChangelog();
 		setupMedium(grid.getSquareArray());
 		stepForward();

@@ -6,7 +6,7 @@ public interface Algorithm {
 	//Methods:
 	
 	//Gets next generation of the grid:
-	public ArrayList<Integer[]> getNextGeneration(Grid g);
+	public ArrayList<ChangelogItem> getNextGeneration(Grid g);
 	
 	//Gets n-th generation of the grid:
 	public void getGridAfterNGenerations(Grid g, int n);

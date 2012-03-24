@@ -34,4 +34,28 @@ public class ChangelogItem {
 	public ChangelogItem() {
 		
 	}
+	
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+	public void setColumn(int column) {
+		this.column = column;
+	}
+
+	public int getNewState() {
+		return newState;
+	}
+
+	public void setNewState(int newState) {
+		this.newState = newState;
+	}
 }

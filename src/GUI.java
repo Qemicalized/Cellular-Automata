@@ -297,7 +297,7 @@ public class GUI {
 		 * Everything to do with the speed slider.
 		 */
 		JSlider slider = new JSlider();
-		slider.setMinimum(-20);
+		slider.setMinimum(0);
 		slider.setMaximum(1000);
 		slider.setPaintTicks(true);
 		slider.setMajorTickSpacing(50);
@@ -525,11 +525,11 @@ public class GUI {
 	//Method, that paints some specific cells, specified in
 	//array list:
 	//(Invoked by Engine)
-	public void paintSomeGrid(ArrayList<Integer[]> arrList) {
-		Integer[] arr;
+	public void paintSomeGrid(ArrayList<ChangelogItem> arrList) {
+		ChangelogItem c;
 		for (int x = 0 ; x < arrList.size(); x++) {
-			arr = arrList.get(x);
-			graphicalG.gGrid.setValueAt(arr[2], arr[0], arr[1]);
+			c = arrList.get(x);
+			graphicalG.gGrid.setValueAt(c.getNewState(), c.getRow(), c.getColumn());
 		}
 	}
 	
@@ -549,9 +549,23 @@ public class GUI {
 			if (c == 1)
 				ans = Color.WHITE;
 			if (c == 2)
-				ans = new Color(0x9E0C39);
+				ans = Color.BLUE;
 			if (c == 3)
-				ans = new Color(0x83A300);
+				ans = Color.YELLOW;
+			if (c == 4)
+				ans = Color.GREEN;
+			if (c == 5)
+				ans = Color.PINK;
+			if (c == 6)
+				ans = Color.CYAN;
+			if (c == 7)
+				ans = Color.MAGENTA;
+			if (c == 8)
+				ans = new Color(139, 69, 19);
+			if (c == 9)
+				ans = new Color(160, 32, 240);
+			if (c == 10)
+				ans = new Color(124, 252, 0);
 		}
 		if (colorScheme == 2) {
 			if (c == 0)

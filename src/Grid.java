@@ -33,6 +33,12 @@ public class Grid {
 				squareArray[y][x] = rGen.nextInt(c);
 	}
 	
+	public void setGridLineOfTen() {
+		for (int x = 0 ; x < 10 ; x++)
+			for (int y = dimension / 2 ; y < (dimension/2 + 10) ; y++)
+				squareArray[y-5][dimension/2 + x - 5] = 1;
+	}
+	
 	
 	//Sets plain grid - every entry contains a 0:
 	public void setGridPlain() {
