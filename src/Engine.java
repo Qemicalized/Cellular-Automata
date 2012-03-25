@@ -6,10 +6,19 @@ public class Engine extends Thread{
 	private GUI gui;
 	private Grid grid;
 	private boolean engineShouldRun = false;
+	private int type;
+	private int noOfColors;
 	
-	//Constructor:
-	public Engine() {
-		alg = new AlgorithmGameOfLife();
+	public Engine(int type, int dimension, int noOfColors){ // type is 0 for Game of Life, 1 for Langton's Ant, 2 is arbitrary
+		this.type = type;
+		this.noOfColors = noOfColors;
+		if (type == 0){
+//			alg = new AlgorithmGameOfLife(dimension, noOfColors); // TODO algorithm needs to be changed accordingly
+		} else if (type == 1){
+			alg = new AlgorithmLangtonsAnt(dimension, noOfColors);
+		} else{
+//			alg = new AnythingElse(dimension, noOfColors);
+		}
 	}
 	
 	//Assigns a GUI object to the engine:
@@ -63,7 +72,7 @@ public class Engine extends Thread{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
+			gui.plusOneGeneration();
 			gui.paintSomeGrid(alg.getNextGeneration(grid));
 		} while (engineShouldRun);
 	}
@@ -102,5 +111,12 @@ public class Engine extends Thread{
 			} while (engineShouldRun);
 		}
 	}
-
+	
+	public int getNoOfColors(){
+		return noOfColors;
+	}
+	
+	public int getType(){
+		return type;
+	}
 }

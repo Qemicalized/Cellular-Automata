@@ -1,11 +1,3 @@
-/**
- * @author Anders
- *
- */
-/*
- * This is my proposed changelog item, I shall not change the other classes to use it untill I
- * have your consent.
- */
 
 public class ChangelogItem {
 
@@ -38,24 +30,36 @@ public class ChangelogItem {
 	public int getRow() {
 		return row;
 	}
+	/**
+	 * @param set the row(y-coordinate) to row
+	 */
 
 	public void setRow(int row) {
 		this.row = row;
 	}
-
+	/**
+	 * @return the column(x-coordinate)
+	 */
 	public int getColumn() {
 		return column;
 	}
-
+	/**
+	 * @param set the column (x-coordinate) to column
+	 */
 	public void setColumn(int column) {
 		this.column = column;
 	}
-
+	/**
+	 * @return the newState
+	 */
 	public int getNewState() {
 		return newState;
 	}
-
+	/**
+	 * @param set the newState to newState
+	 */
 	public void setNewState(int newState) {
 		this.newState = newState;
 	}
+	
 }

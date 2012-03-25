@@ -7,10 +7,10 @@ public class CellularAutomata24_03 {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 					try {
-						Engine Engine = new Engine();
-						GUI Screen = new GUI(Engine);
-						Engine.setGUI(Screen);
-						Engine.setNewGrid(Screen.getDimension());
+						Engine engine = new Engine(1, GUI.INITIAL_DIMENSION, 11); // initial state
+						GUI Screen = new GUI(engine);
+						engine.setGUI(Screen);
+						engine.setNewGrid(Screen.getDimension());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

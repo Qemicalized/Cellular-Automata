@@ -9,8 +9,8 @@ public class CellRenderer extends DefaultTableCellRenderer {
 	
 	private GUI g;
 	
-	public void setGUI (GUI g) {
-		this.g = g;
+	public void setGUI (GUI gui) {
+		this.g = gui;
 	}
 
 	private static final long serialVersionUID = 1L;
