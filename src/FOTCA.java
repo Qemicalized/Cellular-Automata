@@ -43,6 +43,7 @@ public abstract class FOTCA implements Algorithm{
 		this.bouncingWall = new int[numberOfRows][numberOfColumns];
 		
 		this.changeLog = new ArrayList<ChangelogItem>();
+		this.changelogEnabled = true;
 	}
 	
 	/* * ** *** ***** ******** ************* *********************
@@ -236,6 +237,9 @@ public abstract class FOTCA implements Algorithm{
 		this.numberOfColumns = grid[0].length;
 		this.surface = grid;
 		this.bouncingWall = new int[numberOfRows][numberOfColumns];
+		if (currentGeneration == 1) {
+			addGlider(2, 2); //Temporary code, hopefully.
+		}
 	}
 	
 
@@ -251,7 +255,7 @@ public abstract class FOTCA implements Algorithm{
 		clearChangelog();
 		setupMedium(grid.getSquareArray());
 		stepForward();
-		return changeLog;
+		return this.changeLog;
 	}
 
 	/* (non-Javadoc)

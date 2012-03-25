@@ -13,7 +13,7 @@ public class Engine extends Thread{
 		this.type = type;
 		this.noOfColors = noOfColors;
 		if (type == 0){
-//			alg = new AlgorithmGameOfLife(dimension, noOfColors); // TODO algorithm needs to be changed accordingly
+			alg = new Generations(noOfColors, "23", "3");
 		} else if (type == 1){
 			alg = new AlgorithmLangtonsAnt(dimension, noOfColors);
 		} else{

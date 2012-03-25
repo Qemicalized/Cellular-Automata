@@ -197,7 +197,7 @@ public class GUI {
 		 */
 		rdbtnGameOfLife_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// once algorithm is proper for changeAlgorithm call, fill this in
+				changeAlgorithm(0, dimension, 2);
 			}
 		});
 		rdbtnGameOfLife_n.addActionListener(new ActionListener() {
@@ -567,8 +567,8 @@ public class GUI {
 	// Method, that paints some specific cells, specified in
 	// array list:
 	// (Invoked by Engine)
-	public void paintSomeGrid(ArrayList<ChangeLogItem> arrList) {
-		ChangeLogItem c;
+	public void paintSomeGrid(ArrayList<ChangelogItem> arrList) {
+		ChangelogItem c;
 		for (int x = 0; x < arrList.size(); x++) {
 			c = arrList.get(x);
 			graphicalG.gGrid.setValueAt(c.getNewState(), c.getRow(),
