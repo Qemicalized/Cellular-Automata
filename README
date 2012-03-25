@@ -1,5 +1,3 @@
-I'm annoyed at having several versions of the same code from the same day with only small differences that  cannot track, so I'm Trying to get our git repo restarted.
+Up to date, I believe, as of Saturday evening.
 
-I choose one of the 3 19 dir's at random and uploaded it.
-
-Remember to run with JRE 1.7 and to keep the pictures in the bin folder or you will get the NullPointerException I was complaining about.
+Remember to run with JRE 1.7
