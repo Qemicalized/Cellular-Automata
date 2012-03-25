@@ -667,6 +667,17 @@ public class GUI {
 		}
 		return ans;
 	}
+	/** 
+	 * @param c The number position in the spectrum to get, lower value gives darker color.
+	 * @param n The width of the spectrum.
+	 * @return A color between black and bright green.
+	 */
+	public Color getColorSchemeColor(int c, int n) {
+		if (c > n || c < 0 || n < 2) {
+			return Color.RED; // Return red for anything outside the spectrum or an invalid spectrum
+		}
+		return new Color(255/(n-1)*c*0x000100);
+	}
 
 	public static int roundToBetterNumber(int a, int b) {
 		if (Math.round((float) b / a) == Math.floor((float) b / a)) {
