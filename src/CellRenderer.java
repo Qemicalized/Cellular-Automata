@@ -19,7 +19,8 @@ public class CellRenderer extends DefaultTableCellRenderer {
 		
 		Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 		if (value instanceof Integer) {
-			cell.setBackground(g.getColorSchemeColor((Integer)value));
+
+			cell.setBackground(g.getColorSchemeColor((Integer) value));
 			setText("");
 		}
 		return cell;
