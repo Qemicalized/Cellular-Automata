@@ -17,7 +17,7 @@ public class Engine extends Thread{
 		} else if (type == 1){
 			alg = new AlgorithmLangtonsAnt(dimension, noOfColors);
 		} else{
-//			alg = new AnythingElse(dimension, noOfColors);
+			alg = new AlgorithmHodgePodge();
 		}
 	}
 	

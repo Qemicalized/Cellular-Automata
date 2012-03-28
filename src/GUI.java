@@ -106,7 +106,7 @@ public class GUI {
 		gbc_label.gridx = 0;
 		gbc_label.gridy = 0;
 		algorithmsPanel.add(label, gbc_label);
-		
+
 		textField = new JTextField();
 		textField.setEditable(false);
 		textField.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -168,6 +168,16 @@ public class GUI {
 		gbc_rdbtnLangtonsAnt_3.gridy = 10;
 		algorithmsPanel.add(rdbtnLangtonsAnt_11, gbc_rdbtnLangtonsAnt_3);
 
+		JRadioButton rdbtnHodgePodge = new JRadioButton(
+				"Hodge Podge");
+		rdbtnLangtonsAnt_11.setSelected(true);
+		GridBagConstraints gbc_rdbtnHodgePodge = new GridBagConstraints();
+		gbc_rdbtnHodgePodge.fill = GridBagConstraints.BOTH;
+		gbc_rdbtnHodgePodge.insets = new Insets(0, 0, 5, 5);
+		gbc_rdbtnHodgePodge.gridx = 0;
+		gbc_rdbtnHodgePodge.gridy = 11;
+		algorithmsPanel.add(rdbtnHodgePodge, gbc_rdbtnHodgePodge);
+
 		/*
 		 * Loads all of the pictures for buttons.
 		 */
@@ -191,6 +201,8 @@ public class GUI {
 		algorithmGroup.add(rdbtnLangtonsAnt_3);
 		algorithmGroup.add(rdbtnLangtonsAnt_4);
 		algorithmGroup.add(rdbtnLangtonsAnt_11);
+		algorithmGroup.add(rdbtnHodgePodge);
+		
 
 		/*
 		 * Adds the action listeners to the whole group.
@@ -200,9 +212,15 @@ public class GUI {
 				changeAlgorithm(0, dimension, 2);
 			}
 		});
+		rdbtnHodgePodge.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				changeAlgorithm(2, dimension, 16);
+			}
+		});
 		rdbtnGameOfLife_n.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// once algorithm is proper for changeAlgorithm call, fill this in
+				// once algorithm is proper for changeAlgorithm call, fill this
+				// in
 			}
 		});
 		rdbtnLangtonsAnt_2.addActionListener(new ActionListener() {
@@ -474,8 +492,9 @@ public class GUI {
 				eng.resume();
 				long start = System.currentTimeMillis();
 				eng.runEngine(generation);
-				long elapsedTimeMillis = System.currentTimeMillis()-start;
-				textField.setText(Double.toString((double) elapsedTimeMillis / 1000));
+				long elapsedTimeMillis = System.currentTimeMillis() - start;
+				textField.setText(Double
+						.toString((double) elapsedTimeMillis / 1000));
 			}
 		});
 		generationTF.addMouseListener(new MouseAdapter() {
@@ -526,7 +545,7 @@ public class GUI {
 
 	// Method, that changes the dimension of the grid:
 	// (Invoked by GUI)
-	private void changeDimension(int dimension) { 
+	private void changeDimension(int dimension) {
 		this.dimension = dimension;
 		changeAlgorithm(eng.getType(), dimension, eng.getNoOfColors());
 	}
@@ -667,16 +686,21 @@ public class GUI {
 		}
 		return ans;
 	}
-	/** 
-	 * @param c The number position in the spectrum to get, lower value gives darker color.
-	 * @param n The width of the spectrum.
+
+	/**
+	 * @param c
+	 *            The number position in the spectrum to get, lower value gives
+	 *            darker color.
+	 * @param n
+	 *            The width of the spectrum.
 	 * @return A color between black and bright green.
 	 */
 	public Color getColorSchemeColor(int c, int n) {
 		if (c > n || c < 0 || n < 2) {
-			return Color.RED; // Return red for anything outside the spectrum or an invalid spectrum
+			return Color.RED; // Return red for anything outside the spectrum or
+								// an invalid spectrum
 		}
-		return new Color(255/(n-1)*c*0x000100);
+		return new Color(255 / (n - 1) * c * 0x000100);
 	}
 
 	public static int roundToBetterNumber(int a, int b) {
