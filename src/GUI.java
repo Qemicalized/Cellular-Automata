@@ -59,11 +59,26 @@ public class GUI {
 	private int generation = 0;
 	private int colorScheme = 1;
 	private JTextField textField;
+	
+	/* I could find no better place to put this */
+	private ColorGradient colorGradient;
+	private ColorGradient rainbow;
 
 	/*
 	 * Create the application.
 	 */
 	public GUI(Engine eng) {
+		/*This part is for setting the gradiant, I did not know where to put it It is possible to have several gradiant objects. 
+		 * Keep in mind that the number is gradiants per color, ie the total number of colors available will be 
+		 * (colors-1)*gradiants */
+		ArrayList<Color> colorList = new ArrayList<Color>();
+		colorList.add(Color.DARK_GRAY);
+		colorList.add(Color.CYAN);
+		colorList.add(Color.WHITE);
+		colorList.add(Color.DARK_GRAY);
+		this.colorGradient = new ColorGradient(colorList, 8);
+		this.rainbow = new ColorGradient();
+		
 		this.eng = eng;
 		initialize();
 		initialiseGridOnScreen();
@@ -126,13 +141,13 @@ public class GUI {
 		gbc_rdbtnGameOfLife.gridy = 1;
 		algorithmsPanel.add(rdbtnGameOfLife_2, gbc_rdbtnGameOfLife);
 
-		JRadioButton rdbtnGameOfLife_n = new JRadioButton("Game of Life // n");
+		JRadioButton rdbtnBrain_2 = new JRadioButton("Brain // 18");
 		GridBagConstraints gbc_rdbtnGameOfLife_1 = new GridBagConstraints();
 		gbc_rdbtnGameOfLife_1.fill = GridBagConstraints.BOTH;
 		gbc_rdbtnGameOfLife_1.insets = new Insets(0, 0, 5, 0);
 		gbc_rdbtnGameOfLife_1.gridx = 1;
 		gbc_rdbtnGameOfLife_1.gridy = 1;
-		algorithmsPanel.add(rdbtnGameOfLife_n, gbc_rdbtnGameOfLife_1);
+		algorithmsPanel.add(rdbtnBrain_2, gbc_rdbtnGameOfLife_1);
 
 		JRadioButton rdbtnLangtonsAnt_2 = new JRadioButton("Langton's Ant // 2");
 		GridBagConstraints gbc_rdbtnLangtonsAnt = new GridBagConstraints();
@@ -196,7 +211,7 @@ public class GUI {
 		 */
 		ButtonGroup algorithmGroup = new ButtonGroup();
 		algorithmGroup.add(rdbtnGameOfLife_2);
-		algorithmGroup.add(rdbtnGameOfLife_n);
+		algorithmGroup.add(rdbtnBrain_2);
 		algorithmGroup.add(rdbtnLangtonsAnt_2);
 		algorithmGroup.add(rdbtnLangtonsAnt_3);
 		algorithmGroup.add(rdbtnLangtonsAnt_4);
@@ -217,10 +232,9 @@ public class GUI {
 				changeAlgorithm(2, dimension, 16);
 			}
 		});
-		rdbtnGameOfLife_n.addActionListener(new ActionListener() {
+		rdbtnBrain_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// once algorithm is proper for changeAlgorithm call, fill this
-				// in
+				changeAlgorithm(3, dimension, 18);
 			}
 		});
 		rdbtnLangtonsAnt_2.addActionListener(new ActionListener() {
@@ -639,6 +653,8 @@ public class GUI {
 				ans = new Color(0x2FBAD6);
 		}
 		if (colorScheme == 3) {
+			ans = rainbow.getColor(c);
+			/*
 			if (c == 0)
 				ans = Color.DARK_GRAY;
 			if (c == 1)
@@ -673,16 +689,10 @@ public class GUI {
 				ans = new Color(0x1F1F1F);
 			if (c == 16)
 				ans = new Color(0x0F0F0F);
+				*/
 		}
 		if (colorScheme == 4) {
-			int bgcolor = Color.DARK_GRAY.getRGB();
-			int bggreen = Color.DARK_GRAY.getGreen();
-			int n = eng.getNoOfColors();
-			if (c > n || c < 0 || n < 2) {
-				return Color.RED; // Return red for anything outside the spectrum or
-									// an invalid spectrum
-			}
-			ans = new Color(bgcolor +(255-bggreen) / (n - 1) * c * 0x000100);
+			ans = colorGradient.getColor(c);
 		}
 		/*if (colorScheme == 4) {
 			if (c == 0)

@@ -16,8 +16,10 @@ public class Engine extends Thread{
 			alg = new Generations(noOfColors, "23", "3");
 		} else if (type == 1){
 			alg = new AlgorithmLangtonsAnt(dimension, noOfColors);
-		} else{
+		} else if (type == 2){
 			alg = new AlgorithmHodgePodge();
+		}else if (type == 3) {
+			alg = new Generations(noOfColors, "", "2");
 		}
 	}
 	
