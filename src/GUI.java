@@ -595,21 +595,106 @@ public class GUI {
 		}
 	}
 
-	/**
-	 * @param c
-	 *            The number position in the spectrum to get, lower value gives
-	 *            darker color.
-	 * @param n
-	 *            The width of the spectrum.
-	 * @return A color between black and bright green.
-	 */
+	// Method, that gives a color from current colorscheme:
+	// (Invoked by GUI):
 	public Color getColorSchemeColor(int c) {
-		int n = eng.getNoOfColors();
-		if (c > n || c < 0 || n < 2) {
-			return Color.RED; // Return red for anything outside the spectrum or
-								// an invalid spectrum
+		// A method for getting the color scheme color
+		// (If a color scheme (gui instance variable)
+		// is set to "2" and int c is "3", that means,
+		// that this function should get the value of
+		// third color in second color scheme):
+		Color ans = Color.RED; // In case there's nothing there.
+		if (colorScheme == 1) {
+			if (c == 0)
+				ans = Color.DARK_GRAY;
+			if (c == 1)
+				ans = Color.WHITE;
+			if (c == 2)
+				ans = Color.BLUE;
+			if (c == 3)
+				ans = Color.YELLOW;
+			if (c == 4)
+				ans = Color.GREEN;
+			if (c == 5)
+				ans = Color.PINK;
+			if (c == 6)
+				ans = Color.CYAN;
+			if (c == 7)
+				ans = Color.MAGENTA;
+			if (c == 8)
+				ans = new Color(139, 69, 19);
+			if (c == 9)
+				ans = new Color(160, 32, 240);
+			if (c == 10)
+				ans = new Color(124, 252, 0);
 		}
-		return new Color(255 / (n - 1) * c * 0x000100);
+		if (colorScheme == 2) {
+			if (c == 0)
+				ans = Color.DARK_GRAY;
+			if (c == 1)
+				ans = new Color(0xF8F4E6);
+			if (c == 2)
+				ans = new Color(0x7E6F3E);
+			if (c == 3)
+				ans = new Color(0x2FBAD6);
+		}
+		if (colorScheme == 3) {
+			if (c == 0)
+				ans = Color.DARK_GRAY;
+			if (c == 1)
+				ans = new Color(0xFFFFFF);
+			if (c == 2)
+				ans = new Color(0xEFEFEF);
+			if (c == 3)
+				ans = new Color(0xDFDFDF);
+			if (c == 4)
+				ans = new Color(0xCFCFCF);
+			if (c == 5)
+				ans = new Color(0xBFBFBF);
+			if (c == 6)
+				ans = new Color(0xAFAFAF);
+			if (c == 7)
+				ans = new Color(0x9F9F9F);
+			if (c == 8)
+				ans = new Color(0x8F8F8F);
+			if (c == 9)
+				ans = new Color(0x7F7F7F);
+			if (c == 10)
+				ans = new Color(0x6F6F6F);
+			if (c == 11)
+				ans = new Color(0x5F5F5F);
+			if (c == 12)
+				ans = new Color(0x4F4F4F);
+			if (c == 13)
+				ans = new Color(0x3F3F3F);
+			if (c == 14)
+				ans = new Color(0x2F2F2F);
+			if (c == 15)
+				ans = new Color(0x1F1F1F);
+			if (c == 16)
+				ans = new Color(0x0F0F0F);
+		}
+		if (colorScheme == 4) {
+			int bgcolor = Color.DARK_GRAY.getRGB();
+			int bggreen = Color.DARK_GRAY.getGreen();
+			int n = eng.getNoOfColors();
+			if (c > n || c < 0 || n < 2) {
+				return Color.RED; // Return red for anything outside the spectrum or
+									// an invalid spectrum
+			}
+			ans = new Color(bgcolor +(255-bggreen) / (n - 1) * c * 0x000100);
+		}
+		/*if (colorScheme == 4) {
+			if (c == 0)
+				ans = Color.DARK_GRAY;
+			if (c == 1)
+				ans = Color.CYAN;
+			if (c == 2)
+				ans = Color.MAGENTA;
+			if (c == 3)
+				ans = Color.YELLOW;
+		}*/
+		return ans;
 	}
 
 	public static int roundToBetterNumber(int a, int b) {
