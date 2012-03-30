@@ -68,15 +68,16 @@ public class GUI {
 	 * Create the application.
 	 */
 	public GUI(Engine eng) {
-		/*This part is for setting the gradiant, I did not know where to put it It is possible to have several gradiant objects. 
-		 * Keep in mind that the number is gradiants per color, ie the total number of colors available will be 
-		 * (colors-1)*gradiants */
+		/*This part is for setting the gradient, I did not know where to put it It is possible to have several gradient objects. 
+		 * Keep in mind that the number is gradients per color, ie the total number of colors available will be 
+		 * (colors-1)*gradients 
+		 * The last parameter, colorZero, is used to achieve high contrast between the two first colors so that 
+		 * a long gradient will look well also with binary algorithms*/
 		ArrayList<Color> colorList = new ArrayList<Color>();
-		colorList.add(Color.DARK_GRAY);
 		colorList.add(Color.CYAN);
 		colorList.add(Color.WHITE);
-		colorList.add(Color.DARK_GRAY);
-		this.colorGradient = new ColorGradient(colorList, 8);
+		colorList.add(Color.MAGENTA);
+		this.colorGradient = new ColorGradient(colorList, 9, Color.DARK_GRAY);
 		this.rainbow = new ColorGradient();
 		
 		this.eng = eng;
