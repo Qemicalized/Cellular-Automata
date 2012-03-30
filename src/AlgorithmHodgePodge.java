@@ -46,9 +46,62 @@ public class AlgorithmHodgePodge implements Algorithm {
 			g.setGridRandomColors(2);
 		}
 		
-		for (int y = 0; y < g.getDimension(); y++) {
-			for (int x = 0; x < g.getDimension(); x++) { //Loops through the squares
+		int iStop = squareArray[0].length-1;
+		int jStop = squareArray.length-1;
+		for (int y = 1; y < iStop; y++) {
+			for (int x = 1; x < jStop; x++) { /* Iterates through all the squares but the ones on edges */
 				infectiontotal = getInfectionTotal(y, x, g, squareArray); //Gets the infection level around the cell
+				state = squareArray[x][y]; //Gets the state of that cell
+
+				if (state == range) { //If the cell is fully ill, make it better
+					c = new ChangelogItem(y, x, 0);
+					arrList.add(c);
+				} else if (state > 0 && state < range) { //If the cell is is partially ill, make it more sick
+					infectiontotal = infectiontotal + localInfectionRate;
+					c = new ChangelogItem(y, x, setInfection(infectiontotal));
+					arrList.add(c);
+				} else { //If the cell is healthy, see if the neighbouring infection is enough to make it ill
+					if (infectiontotal > threshold) {
+						c = new ChangelogItem(y, x,
+								setInfection(infectiontotal));
+						arrList.add(c);
+					}
+				}
+
+			}
+		}
+
+		/*
+		 * The two loops below does basically the same as the one above but on the borders of the grid using safeGetTotalInfection
+		 */
+		for (int y = 0; y < squareArray[0].length; y+=iStop) {/* I use iStop only because it is already set to the right value */
+			for (int x = 0; x < squareArray.length; x++) { //Loops through the squares
+				infectiontotal = safeGetInfectionTotal(y, x, g, squareArray); //Gets the infection level around the cell
+				state = squareArray[x][y]; //Gets the state of that cell
+
+				if (state == range) { //If the cell is fully ill, make it better
+					c = new ChangelogItem(y, x, 0);
+					arrList.add(c);
+				} else if (state > 0 && state < range) { //If the cell is is partially ill, make it more sick
+					infectiontotal = infectiontotal + localInfectionRate;
+					c = new ChangelogItem(y, x, setInfection(infectiontotal));
+					arrList.add(c);
+				} else { //If the cell is healthy, see if the neighbouring infection is enough to make it ill
+					if (infectiontotal > threshold) {
+						c = new ChangelogItem(y, x,
+								setInfection(infectiontotal));
+						arrList.add(c);
+					}
+				}
+
+			}
+		}
+		
+		/* This loop leaves the corners untouched as to not add the change twice*/
+		for (int y = 1; y < iStop; y++) {
+			/* I use jStop only because it is already set to the right value */
+			for (int x = 0; x < squareArray.length; x+=jStop) { //Loops through the squares
+				infectiontotal = safeGetInfectionTotal(y, x, g, squareArray); //Gets the infection level around the cell
 				state = squareArray[x][y]; //Gets the state of that cell
 
 				if (state == range) { //If the cell is fully ill, make it better
@@ -86,8 +139,7 @@ public class AlgorithmHodgePodge implements Algorithm {
 
 		for (int u = -1; u < 2; u++) {
 			for (int i = -1; i < 2; i++) { //Loop around the square
-				state = s[(y + u + g.getDimension()) % g.getDimension()][(x + i + g
-						.getDimension()) % g.getDimension()];
+				state = s[y + u][x + i];
 				if (state > 0) { //If a neighbouring cell is ill, then increase the total infection for the cell by the infection rate
 					total = total + surroundingInfectionRate;
 				}
@@ -97,6 +149,21 @@ public class AlgorithmHodgePodge implements Algorithm {
 		return total;
 	}
 
+	private int safeGetInfectionTotal(int y, int x, Grid g, int[][] s) {
+		int total = 0;
+		int state = 0; // this will be the retrieved state from the grid
+
+		for (int u = -1; u < 2; u++) {
+			for (int i = -1; i < 2; i++) { //Loop around the square
+				state = s[(y + u +g.getDimension())%g.getDimension()][(x + i +g.getDimension())%g.getDimension()];
+				if (state > 0) { //If a neighbouring cell is ill, then increase the total infection for the cell by the infection rate
+					total = total + surroundingInfectionRate;
+				}
+			}
+		}
+
+		return total;
+	}
 	// This sets the infection "nicely" , stopping it from going above the range
 	private int setInfection(int level) {
 		if (level > range) {
