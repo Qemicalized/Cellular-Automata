@@ -27,14 +27,14 @@ public class AlgorithmHodgePodge implements Algorithm {
 	}
 
 	// Constructor that sets based on default values
-	public AlgorithmHodgePodge() {
-		localInfectionRate = 4;
-		surroundingInfectionRate = 3;
-		range = 16;
-		threshold = 5;
+	public AlgorithmHodgePodge() { //Previous values were 4, 3, 16, 5
+		localInfectionRate = 1;
+		surroundingInfectionRate = 1;
+		range = 8;
+		threshold = 3;
 	}
 
-	// Algorithm to get the next generation
+	// Algorithm to get the next genexration
 	public ArrayList<ChangelogItem> getNextGeneration(Grid g) { // unfinished
 		ArrayList<ChangelogItem> arrList = new ArrayList<ChangelogItem>(); //Stores all the changes
 		ChangelogItem c;
@@ -51,7 +51,7 @@ public class AlgorithmHodgePodge implements Algorithm {
 		for (int y = 1; y < iStop; y++) {
 			for (int x = 1; x < jStop; x++) { /* Iterates through all the squares but the ones on edges */
 				infectiontotal = getInfectionTotal(y, x, g, squareArray); //Gets the infection level around the cell
-				state = squareArray[x][y]; //Gets the state of that cell
+				state = squareArray[y][x]; //Gets the state of that cell
 
 				if (state == range) { //If the cell is fully ill, make it better
 					c = new ChangelogItem(y, x, 0);
@@ -77,7 +77,7 @@ public class AlgorithmHodgePodge implements Algorithm {
 		for (int y = 0; y < squareArray[0].length; y+=iStop) {/* I use iStop only because it is already set to the right value */
 			for (int x = 0; x < squareArray.length; x++) { //Loops through the squares
 				infectiontotal = safeGetInfectionTotal(y, x, g, squareArray); //Gets the infection level around the cell
-				state = squareArray[x][y]; //Gets the state of that cell
+				state = squareArray[y][x]; //Gets the state of that cell
 
 				if (state == range) { //If the cell is fully ill, make it better
 					c = new ChangelogItem(y, x, 0);
@@ -102,7 +102,7 @@ public class AlgorithmHodgePodge implements Algorithm {
 			/* I use jStop only because it is already set to the right value */
 			for (int x = 0; x < squareArray.length; x+=jStop) { //Loops through the squares
 				infectiontotal = safeGetInfectionTotal(y, x, g, squareArray); //Gets the infection level around the cell
-				state = squareArray[x][y]; //Gets the state of that cell
+				state = squareArray[y][x]; //Gets the state of that cell
 
 				if (state == range) { //If the cell is fully ill, make it better
 					c = new ChangelogItem(y, x, 0);
