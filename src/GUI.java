@@ -54,6 +54,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JProgressBar;
+import javax.swing.border.EmptyBorder;
 
 public class GUI {
 
@@ -70,6 +71,7 @@ public class GUI {
 	private int colorScheme = 1;
 	private JTextField textField;
 	private JSlider slider;
+	private JProgressBar progressBar;
 
 	/*
 	 * Create the application.
@@ -274,7 +276,7 @@ public class GUI {
 		 */
 		JPanel playPauseStopPanel = new JPanel();
 		playPauseStopPanel.setBackground(Color.DARK_GRAY);
-		playPauseStopPanel.setBounds(10, 662, 274, 91);
+		playPauseStopPanel.setBounds(10, 672, 274, 81);
 		frame.getContentPane().add(playPauseStopPanel);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[] { 0, 0, 0, 0 };
@@ -560,6 +562,14 @@ public class GUI {
 		generationTF.setColumns(10);
 		generationTF.setHorizontalAlignment(JTextField.RIGHT);
 		propertyPanel.add(generationTF, gbc_textField_1);
+		
+		progressBar = new JProgressBar();
+		progressBar.setToolTipText("Progress bar for higher generations.");
+		progressBar.setPreferredSize(new Dimension(146, 6));
+		progressBar.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		progressBar.setBackground(Color.DARK_GRAY);
+		progressBar.setBounds(13, 662, 268, 10);
+		frame.getContentPane().add(progressBar);
 	}
 
 	// Getter method for giving grid's dimension:
@@ -763,5 +773,14 @@ public class GUI {
 			}
 		});
 
+	}
+	
+	public void increaseProgressBar(){
+		if (progressBar.getValue() != 100){
+			progressBar.setValue(progressBar.getValue()+1);
+		} else{
+			progressBar.setValue(0);
+		}
+		progressBar.paintImmediately(progressBar.getVisibleRect());
 	}
 }

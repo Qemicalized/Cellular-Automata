@@ -84,21 +84,32 @@ public class Engine extends Thread{
 	public void runEngine(int toGeneration ) {
 		// If the user picked some custom generation that he wants to see:
 		if (toGeneration != grid.getGeneration()) {
+			int generationDifference;
 			//If the generation that user picked customly is a latter generation
 			//of our grid:
 			if (toGeneration > grid.getGeneration()) {
+				generationDifference = toGeneration - grid.getGeneration();
 				//We calculate it without delay:
-				alg.getGridAfterNGenerations(grid, toGeneration - grid.getGeneration());
+				for (int i = 1; i <= 100; i++){
+					alg.getGridAfterNGenerations(grid, generationDifference/100);
+					gui.increaseProgressBar();
+				}
+				gui.increaseProgressBar();
 				//Then we present it on the screen:
 				gui.paintAllGrid(grid);
 				//If the generation, that user picked customly is smaller than current
 				//generation of the grid (say the grid is in its 50-th generation and 
 				//the user entered "20" to the generation input field) :
 			} else {
+				generationDifference = toGeneration;
 				//We need to get new grid:
 				setNewGrid(grid.getDimension());
 				//Then we run it (without delay) to the generation that the user entered:
-				alg.getGridAfterNGenerations(grid, toGeneration - grid.getGeneration());
+				for (int i = 1; i <= 100; i++){
+					alg.getGridAfterNGenerations(grid, generationDifference/100);
+					gui.increaseProgressBar();
+				}
+				gui.increaseProgressBar();
 				//Present it on the screen:
 				gui.paintAllGrid(grid);
 				//After getting some customly inputed generation of the grid, we should turn off the engine:
