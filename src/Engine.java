@@ -2,7 +2,7 @@ public class Engine extends Thread{
 	
 	//Current algorithm:
 	private Algorithm alg;
-	private int delay = 20;
+	private int delay = 46;
 	private GUI gui;
 	private Grid grid;
 	private boolean engineShouldRun = false;
@@ -17,7 +17,7 @@ public class Engine extends Thread{
 		} else if (type == 1){
 			alg = new AlgorithmLangtonsAnt(dimension, noOfColors);
 		} else{
-//			alg = new AnythingElse(dimension, noOfColors);
+			alg = new AlgorithmHodgePodge();
 		}
 	}
 	
@@ -62,18 +62,22 @@ public class Engine extends Thread{
 
 		alg.getGridAfterNGenerations(grid, toGeneration - grid.getGeneration());
 		gui.paintAllGrid(grid);
-		
+		long start;
+		long elapsedTimeMillis;
 		do {
-
+			start = System.currentTimeMillis();
+			gui.plusOneGeneration();
+			gui.paintSomeGrid(alg.getNextGeneration(grid));
+			elapsedTimeMillis = System.currentTimeMillis() - start;
 			try {
 				// this will make the current thread to be inactive for a while
 				// no resources will be used
-				Thread.sleep(delay);
+				if (delay > elapsedTimeMillis){
+					Thread.sleep(delay - elapsedTimeMillis);
+				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			gui.plusOneGeneration();
-			gui.paintSomeGrid(alg.getNextGeneration(grid));
 		} while (engineShouldRun);
 	}
 

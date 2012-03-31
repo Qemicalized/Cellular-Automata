@@ -2,13 +2,13 @@
 public class Ant {
 	private int pos_x, pos_y;
 	private int dimension;
-	private String direction;
+	private char direction;
 	
 	public Ant (int dimension) {
 		this.dimension = dimension;
 		pos_x = dimension/2;
 		pos_y = dimension/2;
-		direction = "n";
+		direction = 'n';
 	}
 	
 	public int getXPosition () {
@@ -94,13 +94,13 @@ public class Ant {
 	
 	private void turnRight () {
 		switch (direction) {
-		case "n": direction = "e";
+		case 'n': direction = 'e';
 			break;
-		case "e": direction = "s";
+		case 'e': direction = 's';
 			break;
-		case "s": direction = "w";
+		case 's': direction = 'w';
 			break;
-		case "w": direction = "n";
+		case 'w': direction = 'n';
 			break;
 		}	
 	}
@@ -113,13 +113,13 @@ public class Ant {
 	
 	private void move() {
 		switch (direction) {
-		case "n": pos_y = (dimension + pos_y - 1) % dimension;
+		case 'n': pos_y = (dimension + pos_y - 1) % dimension;
 			break;
-		case "e": pos_x = (dimension + pos_x + 1) % dimension;
+		case 'e': pos_x = (dimension + pos_x + 1) % dimension;
 			break;
-		case "s": pos_y = (dimension + pos_y + 1) % dimension;
+		case 's': pos_y = (dimension + pos_y + 1) % dimension;
 			break;
-		case "w": pos_x = (dimension + pos_x - 1) % dimension;
+		case 'w': pos_x = (dimension + pos_x - 1) % dimension;
 			break;
 		}	
 	}
