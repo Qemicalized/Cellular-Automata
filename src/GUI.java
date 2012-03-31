@@ -59,11 +59,27 @@ public class GUI {
 	private int generation = 0;
 	private int colorScheme = 1;
 	private JTextField textField;
+	
+	/* I could find no better place to put this */
+	private ColorGradient colorGradient;
+	private ColorGradient rainbow;
 
 	/*
 	 * Create the application.
 	 */
 	public GUI(Engine eng) {
+		/*This part is for setting the gradient, I did not know where to put it It is possible to have several gradient objects. 
+		 * Keep in mind that the number is gradients per color, ie the total number of colors available will be 
+		 * (colors-1)*gradients 
+		 * The last parameter, colorZero, is used to achieve high contrast between the two first colors so that 
+		 * a long gradient will look well also with binary algorithms*/
+		ArrayList<Color> colorList = new ArrayList<Color>();
+		colorList.add(Color.CYAN);
+		colorList.add(Color.WHITE);
+		colorList.add(Color.MAGENTA);
+		this.colorGradient = new ColorGradient(colorList, 9, Color.DARK_GRAY);
+		this.rainbow = new ColorGradient();
+		
 		this.eng = eng;
 		initialize();
 		initialiseGridOnScreen();
@@ -106,7 +122,7 @@ public class GUI {
 		gbc_label.gridx = 0;
 		gbc_label.gridy = 0;
 		algorithmsPanel.add(label, gbc_label);
-		
+
 		textField = new JTextField();
 		textField.setEditable(false);
 		textField.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -126,13 +142,13 @@ public class GUI {
 		gbc_rdbtnGameOfLife.gridy = 1;
 		algorithmsPanel.add(rdbtnGameOfLife_2, gbc_rdbtnGameOfLife);
 
-		JRadioButton rdbtnGameOfLife_n = new JRadioButton("Game of Life // n");
+		JRadioButton rdbtnBrain_2 = new JRadioButton("Brain // 18");
 		GridBagConstraints gbc_rdbtnGameOfLife_1 = new GridBagConstraints();
 		gbc_rdbtnGameOfLife_1.fill = GridBagConstraints.BOTH;
 		gbc_rdbtnGameOfLife_1.insets = new Insets(0, 0, 5, 0);
 		gbc_rdbtnGameOfLife_1.gridx = 1;
 		gbc_rdbtnGameOfLife_1.gridy = 1;
-		algorithmsPanel.add(rdbtnGameOfLife_n, gbc_rdbtnGameOfLife_1);
+		algorithmsPanel.add(rdbtnBrain_2, gbc_rdbtnGameOfLife_1);
 
 		JRadioButton rdbtnLangtonsAnt_2 = new JRadioButton("Langton's Ant // 2");
 		GridBagConstraints gbc_rdbtnLangtonsAnt = new GridBagConstraints();
@@ -168,6 +184,16 @@ public class GUI {
 		gbc_rdbtnLangtonsAnt_3.gridy = 10;
 		algorithmsPanel.add(rdbtnLangtonsAnt_11, gbc_rdbtnLangtonsAnt_3);
 
+		JRadioButton rdbtnHodgePodge = new JRadioButton(
+				"Hodge Podge");
+		rdbtnLangtonsAnt_11.setSelected(true);
+		GridBagConstraints gbc_rdbtnHodgePodge = new GridBagConstraints();
+		gbc_rdbtnHodgePodge.fill = GridBagConstraints.BOTH;
+		gbc_rdbtnHodgePodge.insets = new Insets(0, 0, 5, 5);
+		gbc_rdbtnHodgePodge.gridx = 0;
+		gbc_rdbtnHodgePodge.gridy = 11;
+		algorithmsPanel.add(rdbtnHodgePodge, gbc_rdbtnHodgePodge);
+
 		/*
 		 * Loads all of the pictures for buttons.
 		 */
@@ -186,11 +212,13 @@ public class GUI {
 		 */
 		ButtonGroup algorithmGroup = new ButtonGroup();
 		algorithmGroup.add(rdbtnGameOfLife_2);
-		algorithmGroup.add(rdbtnGameOfLife_n);
+		algorithmGroup.add(rdbtnBrain_2);
 		algorithmGroup.add(rdbtnLangtonsAnt_2);
 		algorithmGroup.add(rdbtnLangtonsAnt_3);
 		algorithmGroup.add(rdbtnLangtonsAnt_4);
 		algorithmGroup.add(rdbtnLangtonsAnt_11);
+		algorithmGroup.add(rdbtnHodgePodge);
+		
 
 		/*
 		 * Adds the action listeners to the whole group.
@@ -200,9 +228,14 @@ public class GUI {
 				changeAlgorithm(0, dimension, 2);
 			}
 		});
-		rdbtnGameOfLife_n.addActionListener(new ActionListener() {
+		rdbtnHodgePodge.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// once algorithm is proper for changeAlgorithm call, fill this in
+				changeAlgorithm(2, dimension, 16);
+			}
+		});
+		rdbtnBrain_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				changeAlgorithm(3, dimension, 18);
 			}
 		});
 		rdbtnLangtonsAnt_2.addActionListener(new ActionListener() {
@@ -474,8 +507,9 @@ public class GUI {
 				eng.resume();
 				long start = System.currentTimeMillis();
 				eng.runEngine(generation);
-				long elapsedTimeMillis = System.currentTimeMillis()-start;
-				textField.setText(Double.toString((double) elapsedTimeMillis / 1000));
+				long elapsedTimeMillis = System.currentTimeMillis() - start;
+				textField.setText(Double
+						.toString((double) elapsedTimeMillis / 1000));
 			}
 		});
 		generationTF.addMouseListener(new MouseAdapter() {
@@ -526,7 +560,7 @@ public class GUI {
 
 	// Method, that changes the dimension of the grid:
 	// (Invoked by GUI)
-	private void changeDimension(int dimension) { 
+	private void changeDimension(int dimension) {
 		this.dimension = dimension;
 		changeAlgorithm(eng.getType(), dimension, eng.getNoOfColors());
 	}
@@ -620,6 +654,8 @@ public class GUI {
 				ans = new Color(0x2FBAD6);
 		}
 		if (colorScheme == 3) {
+			ans = rainbow.getColor(c);
+			/*
 			if (c == 0)
 				ans = Color.DARK_GRAY;
 			if (c == 1)
@@ -654,8 +690,12 @@ public class GUI {
 				ans = new Color(0x1F1F1F);
 			if (c == 16)
 				ans = new Color(0x0F0F0F);
+				*/
 		}
 		if (colorScheme == 4) {
+			ans = colorGradient.getColor(c);
+		}
+		/*if (colorScheme == 4) {
 			if (c == 0)
 				ans = Color.DARK_GRAY;
 			if (c == 1)
@@ -664,19 +704,8 @@ public class GUI {
 				ans = Color.MAGENTA;
 			if (c == 3)
 				ans = Color.YELLOW;
-		}
+		}*/
 		return ans;
-	}
-	/** 
-	 * @param c The number position in the spectrum to get, lower value gives darker color.
-	 * @param n The width of the spectrum.
-	 * @return A color between black and bright green.
-	 */
-	public Color getColorSchemeColor(int c, int n) {
-		if (c > n || c < 0 || n < 2) {
-			return Color.RED; // Return red for anything outside the spectrum or an invalid spectrum
-		}
-		return new Color(255/(n-1)*c*0x000100);
 	}
 
 	public static int roundToBetterNumber(int a, int b) {
